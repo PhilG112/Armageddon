@@ -1,0 +1,11 @@
+packages
+packages .
+
+Domain/obj .
+Domain/bin .
+
+HookIn/obj .
+HookIn/bin .
+
+.vs
+.vs .

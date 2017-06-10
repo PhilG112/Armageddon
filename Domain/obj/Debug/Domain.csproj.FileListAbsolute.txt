@@ -1,0 +1,14 @@
+c:\users\phillip\documents\visual studio 2017\Projects\Armageddon\Domain\bin\Debug\Domain.dll.config
+c:\users\phillip\documents\visual studio 2017\Projects\Armageddon\Domain\bin\Debug\Domain.dll
+c:\users\phillip\documents\visual studio 2017\Projects\Armageddon\Domain\bin\Debug\Domain.pdb
+c:\users\phillip\documents\visual studio 2017\Projects\Armageddon\Domain\bin\Debug\EntityFramework.dll
+c:\users\phillip\documents\visual studio 2017\Projects\Armageddon\Domain\bin\Debug\EntityFramework.SqlServer.dll
+c:\users\phillip\documents\visual studio 2017\Projects\Armageddon\Domain\bin\Debug\EntityFramework.xml
+c:\users\phillip\documents\visual studio 2017\Projects\Armageddon\Domain\bin\Debug\EntityFramework.SqlServer.xml
+c:\users\phillip\documents\visual studio 2017\Projects\Armageddon\Domain\obj\Debug\Domain.csprojResolveAssemblyReference.cache
+c:\users\phillip\documents\visual studio 2017\Projects\Armageddon\Domain\obj\Debug\Domain.dll
+c:\users\phillip\documents\visual studio 2017\Projects\Armageddon\Domain\obj\Debug\Domain.pdb
+c:\users\phillip\documents\visual studio 2017\Projects\Armageddon\Domain\obj\Debug\Domain.Migrations.Initial.resources
+c:\users\phillip\documents\visual studio 2017\Projects\Armageddon\Domain\obj\Debug\Domain.csproj.GenerateResource.Cache
+c:\users\phillip\documents\visual studio 2017\Projects\Armageddon\Domain\obj\Debug\Domain.Migrations.DateChange.resources
+c:\users\phillip\documents\visual studio 2017\Projects\Armageddon\Domain\obj\Debug\Domain.Migrations.ChangeDataTypes.resources

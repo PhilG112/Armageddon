@@ -1,0 +1,16 @@
+c:\users\phillip\documents\visual studio 2017\Projects\Armageddon\HookIn\bin\Debug\HookIn.exe.config
+c:\users\phillip\documents\visual studio 2017\Projects\Armageddon\HookIn\bin\Debug\HookIn.exe
+c:\users\phillip\documents\visual studio 2017\Projects\Armageddon\HookIn\bin\Debug\HookIn.pdb
+c:\users\phillip\documents\visual studio 2017\Projects\Armageddon\HookIn\obj\Debug\HookIn.csprojResolveAssemblyReference.cache
+c:\users\phillip\documents\visual studio 2017\Projects\Armageddon\HookIn\obj\Debug\HookIn.exe
+c:\users\phillip\documents\visual studio 2017\Projects\Armageddon\HookIn\obj\Debug\HookIn.pdb
+c:\users\phillip\documents\visual studio 2017\Projects\Armageddon\HookIn\bin\Debug\Geocoding.dll
+c:\users\phillip\documents\visual studio 2017\Projects\Armageddon\HookIn\bin\Debug\Newtonsoft.Json.dll
+c:\users\phillip\documents\visual studio 2017\Projects\Armageddon\HookIn\bin\Debug\Newtonsoft.Json.xml
+c:\users\phillip\documents\visual studio 2017\Projects\Armageddon\HookIn\bin\Debug\Domain.dll
+c:\users\phillip\documents\visual studio 2017\Projects\Armageddon\HookIn\bin\Debug\EntityFramework.dll
+c:\users\phillip\documents\visual studio 2017\Projects\Armageddon\HookIn\bin\Debug\EntityFramework.SqlServer.dll
+c:\users\phillip\documents\visual studio 2017\Projects\Armageddon\HookIn\bin\Debug\Domain.pdb
+c:\users\phillip\documents\visual studio 2017\Projects\Armageddon\HookIn\bin\Debug\Domain.dll.config
+c:\users\phillip\documents\visual studio 2017\Projects\Armageddon\HookIn\bin\Debug\EntityFramework.xml
+c:\users\phillip\documents\visual studio 2017\Projects\Armageddon\HookIn\bin\Debug\EntityFramework.SqlServer.xml
