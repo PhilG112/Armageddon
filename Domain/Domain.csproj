@@ -60,6 +60,10 @@
     <Compile Include="Migrations\201706100419015_ChangeDataTypes.Designer.cs">
       <DependentUpon>201706100419015_ChangeDataTypes.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201706100531465_AddedCountryToMeteorite.cs" />
+    <Compile Include="Migrations\201706100531465_AddedCountryToMeteorite.Designer.cs">
+      <DependentUpon>201706100531465_AddedCountryToMeteorite.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Meteorite.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -77,6 +81,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201706100419015_ChangeDataTypes.resx">
       <DependentUpon>201706100419015_ChangeDataTypes.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201706100531465_AddedCountryToMeteorite.resx">
+      <DependentUpon>201706100531465_AddedCountryToMeteorite.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

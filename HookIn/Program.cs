@@ -15,8 +15,9 @@ namespace HookIn
     {
         static void Main(string[] args)
         {
-            ParseCsv();
-            //ParseJson();
+            //var db = new ArmageddonContext();
+            //db.Database.ExecuteSqlCommand("delete from dbo.Meteorites");
+            //ParseCsv();
             Console.ReadKey();
         }
 
@@ -44,17 +45,5 @@ namespace HookIn
             Console.WriteLine("Done");
         }
 
-        public static void ParseJson()
-        {
-            using (var r = new StreamReader("METORITES.json"))
-            {
-                var json = r.ReadToEnd();
-                foreach (var j in json)
-                {
-                    Console.WriteLine(j);
-                }
-                
-            }
-        }
     }
 }
