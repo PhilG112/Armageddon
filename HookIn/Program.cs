@@ -17,7 +17,7 @@ namespace HookIn
         {
             //var db = new ArmageddonContext();
             //db.Database.ExecuteSqlCommand("delete from dbo.Meteorites");
-            //ParseCsv();
+            ParseCsv();
             Console.ReadKey();
         }
 
@@ -33,13 +33,16 @@ namespace HookIn
                     NameType = x[2],
                     RecClass = x[3],
                     Mass = x[4],
-                    Year = x[6], // FORMAT DATE
+                    Year = x[6],
                     Longitude = x[8],
                     Latitude = x[7]
                 });
+            var counter = 1;
             foreach (var d in data )
             {
                 db.Meteorites.Add(d);
+                Console.WriteLine(counter);
+                counter++;
             }
             db.SaveChanges();
             Console.WriteLine("Done");
