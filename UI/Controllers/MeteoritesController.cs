@@ -20,7 +20,7 @@ namespace UI.Controllers
        [HttpGet]
         public IActionResult GetAll()
         {
-            var meteories = _context.Meteorites.Where(x => x.Country != null).ToList();
+            var meteories = _context.Meteorites.Take(100).ToList();
             var js = new JavaScriptSerializer {MaxJsonLength = Int32.MaxValue};
             return new ObjectResult(js.Serialize(meteories));
         }
