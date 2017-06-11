@@ -5,7 +5,8 @@ namespace Domain
 {
     public class ArmageddonContext : DbContext
     {
-        public ArmageddonContext() : base("connString") { }
+        public ArmageddonContext() { }
+        public ArmageddonContext(string connString) : base(connString) { }
 
         public DbSet<Meteorite> Meteorites { get; set; }
     }

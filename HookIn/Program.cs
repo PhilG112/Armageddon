@@ -6,6 +6,7 @@ using Domain;
 using Domain.Models;
 using Geocoding;
 using Geocoding.Google;
+using Newtonsoft.Json;
 
 namespace HookIn
 {
@@ -13,16 +14,17 @@ namespace HookIn
     {
         static void Main(string[] args)
         {
-            //var db = new ArmageddonContext();
+            var db = new ArmageddonContext();
             //db.Database.ExecuteSqlCommand("delete from dbo.Meteorites");
             //ParseCsv();
-            ReverseGeocode();
+            //ReverseGeocode();
+
             Console.ReadKey();
         }
 
         public static void ParseCsv()
         {
-            var db = new ArmageddonContext();
+            var db = new ArmageddonContext("Data Source=xpswindows\\development;Initial Catalog=ArmageddonDB;Integrated Security=True;MultipleActiveResultSets=True");
             var data = File.ReadAllLines("Meteorite_Landings.csv")
                 .Skip(1)
                 .Select(x => x.Split(','))
@@ -49,7 +51,7 @@ namespace HookIn
 
         public static void ReverseGeocode()
         {
-            using (var db = new ArmageddonContext())
+            using (var db = new ArmageddonContext("Data Source=xpswindows\\development;Initial Catalog=ArmageddonDB;Integrated Security=True;MultipleActiveResultSets=True"))
             {
                 var m = db.Meteorites.ToList();
                 GoogleGeocoder geocoder = new GoogleGeocoder { ApiKey = "AIzaSyCwvXEfG0IskDlB6WaBTVR_6nsr8CvM71c" };

@@ -30,6 +30,7 @@ namespace UI
         {
             // Add framework services.
             services.AddMvc();
+            services.AddScoped(_ => new ArmageddonContext(Configuration.GetConnectionString("connString")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
