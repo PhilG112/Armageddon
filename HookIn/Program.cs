@@ -2,12 +2,10 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Domain;
 using Domain.Models;
-using Microsoft.VisualBasic.FileIO;
-using Newtonsoft.Json.Linq;
+using Geocoding;
+using Geocoding.Google;
 
 namespace HookIn
 {
@@ -17,7 +15,8 @@ namespace HookIn
         {
             //var db = new ArmageddonContext();
             //db.Database.ExecuteSqlCommand("delete from dbo.Meteorites");
-            ParseCsv();
+            //ParseCsv();
+            ReverseGeocode();
             Console.ReadKey();
         }
 
@@ -48,5 +47,32 @@ namespace HookIn
             Console.WriteLine("Done");
         }
 
+        public static void ReverseGeocode()
+        {
+            using (var db = new ArmageddonContext())
+            {
+                var m = db.Meteorites.ToList();
+                GoogleGeocoder geocoder = new GoogleGeocoder { ApiKey = "AIzaSyCwvXEfG0IskDlB6WaBTVR_6nsr8CvM71c" };
+                var counter = 1;
+                foreach (var i in m)
+                {
+                    if (string.IsNullOrEmpty(i.Longitude) || string.IsNullOrEmpty(i.Latitude)) continue;
+                    if (!string.IsNullOrEmpty(i.Country)) continue;
+                    if (i.Longitude == i.Latitude) continue;
+
+                    var addresses = geocoder.ReverseGeocode(double.Parse(i.Latitude), double.Parse(i.Longitude));
+                    if (!addresses.Any()) continue;
+                    var country = addresses.Where(a => !a.IsPartialMatch).Select(a => a[GoogleAddressType.Country])
+                        .First();
+
+                    i.Country = country.LongName;
+                    db.SaveChanges();
+                    Console.WriteLine(counter);
+                    counter++;
+                }
+                
+                Console.WriteLine("Done All");
+            }
+        }
     }
 }

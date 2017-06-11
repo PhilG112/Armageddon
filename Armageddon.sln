@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HookIn", "HookIn\HookIn.csp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Domain", "Domain\Domain.csproj", "{C368A678-6BB8-431B-A9DD-2FCBFD37F6C7}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UI", "UI\UI.csproj", "{F22E2031-4D28-4859-8427-AAEF78E30BDD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{C368A678-6BB8-431B-A9DD-2FCBFD37F6C7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C368A678-6BB8-431B-A9DD-2FCBFD37F6C7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C368A678-6BB8-431B-A9DD-2FCBFD37F6C7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F22E2031-4D28-4859-8427-AAEF78E30BDD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F22E2031-4D28-4859-8427-AAEF78E30BDD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F22E2031-4D28-4859-8427-AAEF78E30BDD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F22E2031-4D28-4859-8427-AAEF78E30BDD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

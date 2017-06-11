@@ -61,7 +61,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <None Include="Meteorite_Landings.csv" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

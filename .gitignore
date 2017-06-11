@@ -18,3 +18,13 @@ HookIn/obj
 HookIn/obj .
 HookIn/obj/**
 HookIn/obj/**/*
+
+UI/obj
+UI/obj .
+UI/obj/**
+UI/obj/**/*
+
+UI/bin
+UI/bin .
+UI/bin/**
+UI/bin/**/*
