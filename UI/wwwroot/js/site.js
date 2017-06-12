@@ -2,7 +2,7 @@
     var promiseWrapper = (xhr, d) => new Promise(resolve => xhr(d, (p) => resolve(p)));
     Promise.all([
         promiseWrapper(d3.json, "StaticFiles/world.geojson"),
-        promiseWrapper(d3.json, "/api/meteorites")
+        promiseWrapper(d3.json, "Meteorites/GetAll")
     ]).then(resolve => {
         createMap(resolve[0], resolve[1]);
     });
@@ -12,7 +12,7 @@
         height = window.innerHeight - margin.top - margin.bottom;
 
     function createMap(countries, meteorites) {
-        var aProjection = d3.geoMollweide(); // OR d3.getMercator() OR d3.geoOrthographic()
+        var aProjection = d3.geoMollweide(); // d3.getMercator() OR d3.geoOrthographic() OR d3.geoMollweide()
             // .center([0, 0]) => used for globe
             // Overridden by room settings downn below
             //.scale(250)
@@ -37,7 +37,8 @@
             .attr("d", geoPath);
 
         d3.select("svg")
-            .selectAll("circle").data(meteorites)
+            .selectAll("circle")
+            .data(meteorites)
             .enter()
             .append("circle")
             .attr("class", "meteorites")
@@ -49,6 +50,7 @@
             .on("mouseover", countryName) // OR centerBounds
             .on("mouseout", clearCountryName); // OR clearCenterBounds
 
+        // centerBounds() and clearCenterBounds() puts a box around the size of the country as well as dot in its center
         function centerBounds(d) {
             var thisBounds = geoPath.bounds(d);
             var thisCenter = geoPath.centroid(d);
@@ -78,11 +80,16 @@
             .style("opacity", 0);
 
         function countryName(d) {
-            
+            var numOfCountries = [];
+            meteorites.forEach(m => {
+                if (m.Country === d.properties.name) {
+                    numOfCountries.push(m.Country);
+                }
+            });
             div.transition()
                 .duration(200)
                 .style("opacity", .9);
-            div.html(d.properties.name + " has 1 meteorites" )
+            div.html(d.properties.name + " has "+ numOfCountries.length + " meteorites" )
                 .style("left", (d3.event.pageX) + "px")
                 .style("top", (d3.event.pageY) + "px");
         }

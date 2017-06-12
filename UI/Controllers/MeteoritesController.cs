@@ -16,11 +16,11 @@ namespace UI.Controllers
         }
 
        // GET: /api/meteorites
-       [Route("api/meteorites")]
+       //[Route("api/meteorites")]
        [HttpGet]
         public IActionResult GetAll()
         {
-            var meteories = _context.Meteorites.Take(300).ToList();
+            var meteories = _context.Meteorites.Take(500).ToList();
             var js = new JavaScriptSerializer {MaxJsonLength = Int32.MaxValue};
             return new ObjectResult(js.Serialize(meteories));
         }

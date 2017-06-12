@@ -14,10 +14,8 @@ namespace HookIn
     {
         static void Main(string[] args)
         {
-            var db = new ArmageddonContext();
-            //db.Database.ExecuteSqlCommand("delete from dbo.Meteorites");
             //ParseCsv();
-            //ReverseGeocode();
+            ReverseGeocode();
 
             Console.ReadKey();
         }
