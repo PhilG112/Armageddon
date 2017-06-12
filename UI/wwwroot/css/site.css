@@ -4,7 +4,7 @@
     fill: #5EAFC6;
 }
 
-circle.cities {
+circle.meteorites {
     stroke-width: 1;
     stroke: #4F442B;
     fill: #FCBC34;
@@ -41,4 +41,17 @@ path.merged {
 
 svg {
     border: 1px solid red;
+}
+
+div.tooltip {   
+    position: absolute;           
+    text-align: center;           
+    width: 100px;                  
+    height: 32px;                 
+    padding: 2px;             
+    font: 12px sans-serif;        
+    background: lightsteelblue;   
+    border: 0px;      
+    border-radius: 8px;           
+    pointer-events: none;         
 }
