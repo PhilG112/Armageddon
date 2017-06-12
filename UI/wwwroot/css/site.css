@@ -38,3 +38,7 @@ path.merged {
     stroke: #4F442B;
     stroke-width: 2px;
 }
+
+svg {
+    border: 1px solid red;
+}
