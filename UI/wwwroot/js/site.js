@@ -2,7 +2,7 @@
     var promiseWrapper = (xhr, d) => new Promise(resolve => xhr(d, (p) => resolve(p)));
     Promise.all([
         promiseWrapper(d3.json, "StaticFiles/world.geojson"),
-        promiseWrapper(d3.json, "Meteorites/GetAll")
+        promiseWrapper(d3.json, "api/meteorites")
     ]).then(resolve => {
         createMap(resolve[0], resolve[1]);
     });
@@ -90,8 +90,8 @@
                 .duration(200)
                 .style("opacity", .9);
             div.html(d.properties.name + " has "+ numOfCountries.length + " meteorites" )
-                .style("left", (d3.event.pageX) + "px")
-                .style("top", (d3.event.pageY) + "px");
+                .style("left", d3.event.pageX + "px")
+                .style("top", d3.event.pageY + "px");
         }
 
         function clearCountryName(d) {

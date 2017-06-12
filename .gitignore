@@ -28,3 +28,5 @@ UI/bin
 UI/bin .
 UI/bin/**
 UI/bin/**/*
+
+UI/appsettings.json

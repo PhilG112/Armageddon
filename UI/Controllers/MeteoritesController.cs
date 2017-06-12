@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Web.Script.Serialization;
 using Domain;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 
 namespace UI.Controllers
@@ -15,9 +16,9 @@ namespace UI.Controllers
             _context = context;
         }
 
-       // GET: /api/meteorites
-       //[Route("api/meteorites")]
-       [HttpGet]
+        // GET: /api/meteorites
+        [Route("api/meteorites")]
+        [HttpGet]
         public IActionResult GetAll()
         {
             var meteories = _context.Meteorites.Take(500).ToList();
