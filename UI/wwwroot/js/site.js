@@ -182,29 +182,38 @@
             var graticuleHalfHeight = path.getBoundingClientRect().height / 2;
             var lowerLimitY = graticuleHalfHeight;
             var upperLimitY = height - graticuleHalfHeight;
-            var y = e.transform.y;
-            if (e.transform.y < lowerLimitY) {
-                y = lowerLimitY;
-            } else if (e.transform.y > upperLimitY) {
-                y = upperLimitY;
-            }
 
             var graticuleHalfWidth = path.getBoundingClientRect().width / 2;
             var lowerLimitX = width / 2 - graticuleHalfWidth;
             var upperLimitX = width / 2 + graticuleHalfWidth;
-            var x = e.transform.x;
-            if (e.transform.x < lowerLimitX) {
-                x = lowerLimitX;
-            } else if (e.transform.x > upperLimitX) {
-                x = upperLimitX;
+
+            if (path.getBoundingClientRect().height < height) {
+                var y = e.transform.y;
+                if (e.transform.y < lowerLimitY) {
+                    y = lowerLimitY;
+                } else if (e.transform.y > upperLimitY) {
+                    y = upperLimitY;
+                }
+
+
+                var x = e.transform.x;
+                if (e.transform.x < lowerLimitX) {
+                    x = lowerLimitX;
+                } else if (e.transform.x > upperLimitX) {
+                    x = upperLimitX;
+                }
+
+                aProjection
+                    //.translate([width / 2, height / 2])
+                    .translate([x, y])
+                    .scale(e.transform.k);
+                
+            } else {
+                aProjection
+                    //.translate([width / 2, height / 2])
+                    .translate([e.transform.x, e.transform.y])
+                    .scale(e.transform.k);
             }
-
-
-            aProjection
-                //.translate([width / 2, height / 2])
-                .translate([x, y])
-                .scale(e.transform.k);
-
             d3.selectAll("path.graticule").attr("d", geoPath);
             d3.selectAll("path.countries").attr("d", geoPath);
             d3.selectAll("circle.meteorites")
