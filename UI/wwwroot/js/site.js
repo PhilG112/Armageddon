@@ -9,6 +9,7 @@
             // In your controller action, you are going to need pagination
     });
 
+    
     var margin = { top: 20, right: 20, bottom: 20, left: 20 },
         width = window.innerWidth - margin.left - margin.right,
         height = window.innerHeight - margin.top - margin.bottom;
@@ -91,7 +92,7 @@
             
             $(window).on("click", e => {
                 // Check why this wasn't working with $modal with jack
-                if (e.target.id == "myModal") {
+                if (e.target.id === "myModal") {
                     $modal.css({ display: "none" });
                 }
             });
@@ -159,7 +160,7 @@
 
         // ZOOMING
         var mapZoom = d3.zoom()
-            .scaleExtent([150, 400])
+            .scaleExtent([150, 600])
             .on("zoom", zoomed);
 
         var zoomSettings = d3.zoomIdentity
@@ -177,9 +178,8 @@
             var e = d3.event;
 
             var path = document.querySelector("path.graticule.line");
-            var graticuleHalfWidth = path.getBoundingClientRect().width / 2;
+            
             var graticuleHalfHeight = path.getBoundingClientRect().height / 2;
-
             var lowerLimitY = graticuleHalfHeight;
             var upperLimitY = height - graticuleHalfHeight;
             var y = e.transform.y;
@@ -189,6 +189,7 @@
                 y = upperLimitY;
             }
 
+            var graticuleHalfWidth = path.getBoundingClientRect().width / 2;
             var lowerLimitX = width / 2 - graticuleHalfWidth;
             var upperLimitX = width / 2 + graticuleHalfWidth;
             var x = e.transform.x;
@@ -197,6 +198,7 @@
             } else if (e.transform.x > upperLimitX) {
                 x = upperLimitX;
             }
+
 
             aProjection
                 //.translate([width / 2, height / 2])
