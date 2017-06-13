@@ -211,6 +211,7 @@
                 .attr("cx", d => aProjection([d.Longitude, d.Latitude])[0])
                 .attr("cy", d => aProjection([d.Longitude, d.Latitude])[1]);
         }
+        // test line
 
         // Below is what is needed to create globe rotation
         //function zoomed() {
