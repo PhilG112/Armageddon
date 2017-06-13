@@ -15,7 +15,7 @@
         height = window.innerHeight - margin.top - margin.bottom;
 
     function createMap(countries, meteorites) {
-        var aProjection = d3.geoMollweide(); // d3.getMercator() OR d3.geoOrthographic() OR d3.geoMollweide()
+        var aProjection = d3.geoMollweide(); // d3.geoMercator() OR d3.geoOrthographic() OR d3.geoMollweide()
              //.center([0, 0]) // => used for globe
             // Overridden by room settings downn below
             //.scale(250)
@@ -36,7 +36,7 @@
             .enter()
             .append("path")
             .attr("class", "countries")
-            //.style("fill", d => countryColor(geoPath.area(d))) => uncomment this to color countries based on their size.
+            // .style("fill", d => countryColor(geoPath.area(d))) // => uncomment this to color countries based on their size.
             .attr("d", geoPath);
 
         d3.select("svg")
@@ -63,7 +63,7 @@
                 .duration(200)
                 .style("opacity", .9);
             div.html("Meteorite Name: " + d.Name)
-                .style("left", d3.event.pageX + "px")
+                .style("left", d3.event.pageX + 28 + "px")
                 .style("top", d3.event.pageY + "px");
         }
 
@@ -137,7 +137,7 @@
                 .duration(200)
                 .style("opacity", .9);
             div.html(d.properties.name + " has "+ numOfCountries.length + " meteorites" )
-                .style("left", d3.event.pageX + "px")
+                .style("left", d3.event.pageX + 28 + "px")
                 .style("top", d3.event.pageY + "px");
         }
 
@@ -160,7 +160,7 @@
 
         // ZOOMING
         var mapZoom = d3.zoom()
-            .scaleExtent([150, 600])
+            .scaleExtent([150, 3000])
             .on("zoom", zoomed);
 
         var zoomSettings = d3.zoomIdentity

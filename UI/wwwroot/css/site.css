@@ -4,15 +4,16 @@
 }
 
 .countries {
-    stroke-width: 1;
-    stroke: #75739F;
-    fill: #5EAFC6;
+    stroke-width: 0.5;
+    stroke: white;
+    fill: black;
 }
 
 .meteorites {
     stroke-width: 1;
     stroke: #4F442B;
     fill: #FCBC34;
+    width: 100px;
 }
 
 .centroid {
@@ -32,6 +33,7 @@
     fill: none;
     stroke-width: 1;
     stroke: #9A8B7A;
+    opacity: 0;
 }
 
 .graticule.outline {
@@ -85,7 +87,8 @@ svg {
     transform: translate(-50%, -50%);
     padding: 20px;
     border: 1px solid #888;
-    width: 80%; /* Could be more or less, depending on screen size */
+    width: 30%; /* Could be more or less, depending on screen size */
+    text-align: center;
 }
 
 /* The Close Button */
