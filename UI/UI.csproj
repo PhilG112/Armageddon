@@ -9,8 +9,6 @@
     <Content Include="MyStaticFiles\world.geojson" />
     <Content Include="wwwroot\assets\world.topojson" />
     <Content Include="wwwroot\js\colorbrewer.min.js" />
-    <Content Include="wwwroot\js\world.js" />
-    <Content Include="wwwroot\js\world.topojson" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="BuildBundlerMinifier" Version="2.4.337" />

@@ -18,8 +18,8 @@ Armageddon is an interactive data visualization using d3.js. It plots out meteor
 - [x] Deploy
 - [x] Get meteorites on map
 - [x] Make map zoomable and pannable
-- [ ] Set zooming threshold on map
-- [ ] Don't let user panning exceed browser width
+- [x] Set zooming threshold on map
+- [x] Don't let user panning exceed browser width
 - [x] Successfully return meteorite data from api controller as JSON
 - [ ] Make svg responsive
 - [ ] Stagger loading of meteorites as user zooms in
