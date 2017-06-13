@@ -21,7 +21,7 @@ namespace UI.Controllers
         [HttpGet]
         public IActionResult GetAll()
         {
-            var meteories = _context.Meteorites.Take(500).ToList();
+            var meteories = _context.Meteorites.ToList();
             var js = new JavaScriptSerializer {MaxJsonLength = Int32.MaxValue};
             return new ObjectResult(js.Serialize(meteories));
         }

@@ -3,24 +3,24 @@
     margin: 20px;
 }
 
-path.countries {
+.countries {
     stroke-width: 1;
     stroke: #75739F;
     fill: #5EAFC6;
 }
 
-circle.meteorites {
+.meteorites {
     stroke-width: 1;
     stroke: #4F442B;
     fill: #FCBC34;
 }
 
-circle.centroid {
+.centroid {
     fill: #75739F;
     pointer-events: none;
 }
 
-rect.bbox {
+.bbox {
     fill: none;
     stroke-dasharray: 5 5;
     stroke: #75739F;
@@ -28,17 +28,17 @@ rect.bbox {
     pointer-events: none;
 }
 
-path.graticule {
+.graticule {
     fill: none;
     stroke-width: 1;
     stroke: #9A8B7A;
 }
 
-path.graticule.outline {
+.graticule.outline {
     stroke: #9A8B7A;
 }
 
-path.merged {
+.merged {
     fill: #9A8B7A;
     stroke: #4F442B;
     stroke-width: 2px;
@@ -48,7 +48,7 @@ svg {
     border: 1px solid red;
 }
 
-div.tooltip {   
+.tooltip {   
     position: absolute;           
     text-align: center;
     width: 100px;                  
@@ -56,7 +56,49 @@ div.tooltip {
     padding: 2px;             
     font: 12px sans-serif;        
     background: lightsteelblue;   
-    border: 0px;      
+    border: 0;      
     border-radius: 8px;           
     pointer-events: none;         
 }
+
+/* MODAL */
+/* The Modal (background) */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: hidden; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal Content/Box */
+.modal-content {
+    background-color: #fefefe;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%; /* Could be more or less, depending on screen size */
+}
+
+/* The Close Button */
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+} 

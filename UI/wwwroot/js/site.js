@@ -2,9 +2,11 @@
     var promiseWrapper = (xhr, d) => new Promise(resolve => xhr(d, (p) => resolve(p)));
     Promise.all([
         promiseWrapper(d3.json, "StaticFiles/world.geojson"),
-        promiseWrapper(d3.json, "api/meteorites")
+        promiseWrapper(d3.json, "api/meteorites?page=1")
     ]).then(resolve => {
         createMap(resolve[0], resolve[1]);
+        // Set a timer up here to ask for the next 500 every ten seconds
+            // In your controller action, you are going to need pagination
     });
 
     var margin = { top: 20, right: 20, bottom: 20, left: 20 },
@@ -12,7 +14,7 @@
         height = window.innerHeight - margin.top - margin.bottom;
 
     function createMap(countries, meteorites) {
-        var aProjection = d3.geoMollweide() // d3.getMercator() OR d3.geoOrthographic() OR d3.geoMollweide()
+        var aProjection = d3.geoMollweide(); // d3.getMercator() OR d3.geoOrthographic() OR d3.geoMollweide()
              //.center([0, 0]) // => used for globe
             // Overridden by room settings downn below
             //.scale(250)
@@ -42,9 +44,58 @@
             .enter()
             .append("circle")
             .attr("class", "meteorites")
-            .attr("r", 3);
+            .attr("r", 1.5);
             //.attr("cx", d => aProjection([parseFloat(d.Longitude), parseFloat(d.Latitude)])[0])
             //.attr("cy", d => aProjection([parseFloat(d.Longitude), parseFloat(d.Latitude)])[1]);
+
+        var div = d3.select("body").append("div")
+            .attr("class", "tooltip")
+            .style("opacity", 0);
+
+        d3.selectAll("circle.meteorites")
+            .on("mouseover", meteoriteName)
+            .on("mouseout", clearMeteoriteName)
+            .on("click", meteoriteModal);
+
+        function meteoriteName(d) {
+            div.transition()
+                .duration(200)
+                .style("opacity", .9);
+            div.html("Meteorite Name: " + d.Name)
+                .style("left", d3.event.pageX + "px")
+                .style("top", d3.event.pageY + "px");
+        }
+
+        function clearMeteoriteName() {
+            div.transition()
+                .duration(500)
+                .style("opacity", 0);
+        }
+
+        function meteoriteModal(d) {
+            $(".modal-content").html("");
+
+            var $modal = $("#myModal");
+            var $span = $(".close");
+            $.map(d, (v, k) => {
+                var $p = $("<p>");
+                $p.text(`${k}: ${v}`);
+                $p.appendTo($(".modal > .modal-content"));
+            });
+
+            $modal.css({ display: "block" });
+
+            $span.on("click", () => {
+                $modal.css({ display: "none" });
+            });
+            
+            $(window).on("click", e => {
+                // Check why this wasn't working with $modal with jack
+                if (e.target.id == "myModal") {
+                    $modal.css({ display: "none" });
+                }
+            });
+        }
 
         d3.selectAll("path.countries")
             .on("mouseover", countryName) // OR centerBounds
@@ -59,14 +110,13 @@
                 .append("rect")
                 .attr("class", "bbox")
                 .attr("x", thisBounds[0][0])
-                .attr("y", thisBounds[0][1]);
-                // Uncomment the below 2 lines to also see the box around the country
-                //.attr("width", thisBounds[1][0] - thisBounds[0][0])
-                //.attr("height", thisBounds[1][1] - thisBounds[0][1]);
+                .attr("y", thisBounds[0][1])
+                .attr("width", thisBounds[1][0] - thisBounds[0][0])
+                .attr("height", thisBounds[1][1] - thisBounds[0][1]);
             d3.select("svg")
                 .append("circle")
                 .attr("class", "centroid")
-                .attr("r", 5)
+                .attr("r", 2)
                 .attr("cx", parseInt(thisCenter[0])).attr("cy", parseInt(thisCenter[1]));
         }
 
@@ -74,10 +124,6 @@
             d3.selectAll("circle.centroid").remove();
             d3.selectAll("rect.bbox").remove();
         }
-
-        var div = d3.select("body").append("div")
-            .attr("class", "tooltip")
-            .style("opacity", 0);
 
         function countryName(d) {
             var numOfCountries = [];
@@ -99,7 +145,6 @@
                 .duration(500)
                 .style("opacity", 0);
         }
-
         
         // ADDING GRATICULE LINES
         var graticule = d3.geoGraticule();
@@ -114,16 +159,15 @@
 
         // ZOOMING
         var mapZoom = d3.zoom()
-            .scaleExtent([150, 800])
-            //.translateExtent([[-0.1, -0.1], [0.10, 0.10]])
+            .scaleExtent([150, 400])
             .on("zoom", zoomed);
 
         var zoomSettings = d3.zoomIdentity
             .translate(width / 2, height / 2)
-            .scale(150); // OR => .translate(0, 0) (for a globe)
+            .scale(300); // OR => .translate(0, 0) (for a globe)
 
         // When rendering a globe
-        //var rotateScale = d3.scaleLinear()
+        // var rotateScale = d3.scaleLinear()
         //    .domain([-500, 0, 500])
         //    .range([-180, 0, 180]);
 
