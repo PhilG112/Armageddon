@@ -6,6 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Include="MyStaticFiles\world - Copy.geojson" />
     <Content Include="MyStaticFiles\world.geojson" />
     <Content Include="wwwroot\assets\world.topojson" />
     <Content Include="wwwroot\js\colorbrewer.min.js" />
@@ -20,6 +21,7 @@
     <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="1.1.2" />
     <PackageReference Include="Microsoft.VisualStudio.Web.BrowserLink" Version="1.1.2" />
     <PackageReference Include="Newtonsoft.Json" Version="10.0.2" />
+    <PackageReference Include="pagedlist.mvc" Version="4.5.0" />
   </ItemGroup>
   <ItemGroup>
     <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="1.0.1" />

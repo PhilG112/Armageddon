@@ -4,6 +4,7 @@ using System.Web.Script.Serialization;
 using Domain;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
+using PagedList;
 
 namespace UI.Controllers
 {
@@ -19,9 +20,9 @@ namespace UI.Controllers
         // GET: /api/meteorites
         [Route("api/meteorites")]
         [HttpGet]
-        public IActionResult GetAll()
+        public IActionResult GetAll(int pageNumber, int pageSize)
         {
-            var meteories = _context.Meteorites.Where(x => x.Country != null).Take(1000).ToList();
+            var meteories = _context.Meteorites.OrderBy(x => x.Id).Skip((pageNumber - 1) * pageSize).Take(pageSize).ToList();
             var js = new JavaScriptSerializer {MaxJsonLength = Int32.MaxValue};
             return new ObjectResult(js.Serialize(meteories));
         }

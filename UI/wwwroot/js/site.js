@@ -1,22 +1,31 @@
 ﻿$(function () {
     var promiseWrapper = (xhr, d) => new Promise(resolve => xhr(d, (p) => resolve(p)));
+    var pageNumber = 1;
     Promise.all([
         promiseWrapper(d3.json, "StaticFiles/world.geojson"),
-        promiseWrapper(d3.json, "api/meteorites?page=1")
+        promiseWrapper(d3.json, "api/meteorites?pageNumber=1&pageSize=100")
     ]).then(resolve => {
         createMap(resolve[0], resolve[1]);
-        // Set a timer up here to ask for the next 500 every ten seconds
-            // In your controller action, you are going to need pagination
+        window.setInterval(() => {
+            $.ajax({
+                url: `api/meteorites?pageNumber=${pageNumber++}&pageSize=100`,
+                dataType: "json",
+                method: "GET"
+            }).done((d) => {
+                // Do something with data
+            });
+        }, 1000);
     });
 
-    
+
     var margin = { top: 20, right: 20, bottom: 20, left: 20 },
-        width = window.innerWidth - margin.left - margin.right,
-        height = window.innerHeight - margin.top - margin.bottom;
+        width = window.innerWidth,// - margin.left - margin.right,
+        height = window.innerHeight;//- margin.top - margin.bottom;
+
 
     function createMap(countries, meteorites) {
         var aProjection = d3.geoMollweide(); // d3.geoMercator() OR d3.geoOrthographic() OR d3.geoMollweide()
-             //.center([0, 0]) // => used for globe
+            //.center([0, 0]) // => used for globe
             // Overridden by room settings downn below
             //.scale(250)
             //.translate([width / 2, height / 2]);
@@ -36,7 +45,7 @@
             .enter()
             .append("path")
             .attr("class", "countries")
-            // .style("fill", d => countryColor(geoPath.area(d))) // => uncomment this to color countries based on their size.
+            //.style("fill", d => countryColor(geoPath.area(d))) => uncomment this to color countries based on their size.
             .attr("d", geoPath);
 
         d3.select("svg")
@@ -64,7 +73,7 @@
                 .style("opacity", .9);
             div.html("Meteorite Name: " + d.Name)
                 .style("left", d3.event.pageX + 28 + "px")
-                .style("top", d3.event.pageY + "px");
+                .style("top", d3.event.pageY +  28 + "px");
         }
 
         function clearMeteoriteName() {
@@ -138,7 +147,7 @@
                 .style("opacity", .9);
             div.html(d.properties.name + " has "+ numOfCountries.length + " meteorites" )
                 .style("left", d3.event.pageX + 28 + "px")
-                .style("top", d3.event.pageY + "px");
+                .style("top", d3.event.pageY +  28 + "px");
         }
 
         function clearCountryName(d) {
@@ -160,20 +169,21 @@
 
         // ZOOMING
         var mapZoom = d3.zoom()
-            .scaleExtent([150, 3000])
+            .scaleExtent([150, 2000])
             .on("zoom", zoomed);
 
         var zoomSettings = d3.zoomIdentity
             .translate(width / 2, height / 2)
             .scale(300); // OR => .translate(0, 0) (for a globe)
 
-        // When rendering a globe
-        // var rotateScale = d3.scaleLinear()
-        //    .domain([-500, 0, 500])
-        //    .range([-180, 0, 180]);
+        // Use for when rendering a globe
+        var rotateScale = d3.scaleLinear()
+            .domain([-500, 0, 500])
+            .range([-180, 0, 180]);
 
         d3.select("svg").call(mapZoom).call(mapZoom.transform, zoomSettings);
 
+        // Below is for a non globe map
         function zoomed() {
             var e = d3.event;
 
@@ -220,7 +230,7 @@
                 .attr("cx", d => aProjection([d.Longitude, d.Latitude])[0])
                 .attr("cy", d => aProjection([d.Longitude, d.Latitude])[1]);
         }
-        // test line
+        
 
         // Below is what is needed to create globe rotation
         //function zoomed() {
