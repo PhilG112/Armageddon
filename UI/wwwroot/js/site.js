@@ -15,11 +15,11 @@
         height = window.innerHeight - margin.top - margin.bottom;
 
     function createMap(countries, meteorites) {
-        var aProjection = d3.geoMollweide(); // d3.getMercator() OR d3.geoOrthographic() OR d3.geoMollweide()
-             //.center([0, 0]) // => used for globe
+        var aProjection = d3.geoOrthographic() // d3.getMercator() OR d3.geoOrthographic() OR d3.geoMollweide()
+            .center([0, 0]) // => used for globe
             // Overridden by room settings downn below
             //.scale(250)
-            //.translate([width / 2, height / 2]);
+            .translate([width / 2, height / 2]);
 
         var geoPath = d3.geoPath().projection(aProjection);
 
@@ -168,85 +168,86 @@
             .scale(300); // OR => .translate(0, 0) (for a globe)
 
         // When rendering a globe
-        // var rotateScale = d3.scaleLinear()
-        //    .domain([-500, 0, 500])
-        //    .range([-180, 0, 180]);
+        var rotateScale = d3.scaleLinear()
+            .domain([-500, 0, 500])
+            .range([-180, 0, 180]);
 
         d3.select("svg").call(mapZoom).call(mapZoom.transform, zoomSettings);
 
-        function zoomed() {
-            var e = d3.event;
-
-            var path = document.querySelector("path.graticule.line");
-            
-            var graticuleHalfHeight = path.getBoundingClientRect().height / 2;
-            var lowerLimitY = graticuleHalfHeight;
-            var upperLimitY = height - graticuleHalfHeight;
-
-            var graticuleHalfWidth = path.getBoundingClientRect().width / 2;
-            var lowerLimitX = width / 2 - graticuleHalfWidth;
-            var upperLimitX = width / 2 + graticuleHalfWidth;
-
-            if (path.getBoundingClientRect().height < height) {
-                var y = e.transform.y;
-                if (e.transform.y < lowerLimitY) {
-                    y = lowerLimitY;
-                } else if (e.transform.y > upperLimitY) {
-                    y = upperLimitY;
-                }
-
-
-                var x = e.transform.x;
-                if (e.transform.x < lowerLimitX) {
-                    x = lowerLimitX;
-                } else if (e.transform.x > upperLimitX) {
-                    x = upperLimitX;
-                }
-
-                aProjection
-                    //.translate([width / 2, height / 2])
-                    .translate([x, y])
-                    .scale(e.transform.k);
-                
-            } else {
-                aProjection
-                    //.translate([width / 2, height / 2])
-                    .translate([e.transform.x, e.transform.y])
-                    .scale(e.transform.k);
-            }
-            d3.selectAll("path.graticule").attr("d", geoPath);
-            d3.selectAll("path.countries").attr("d", geoPath);
-            d3.selectAll("circle.meteorites")
-                .attr("cx", d => aProjection([d.Longitude, d.Latitude])[0])
-                .attr("cy", d => aProjection([d.Longitude, d.Latitude])[1]);
-        }
-        // test line
-
-        // Below is what is needed to create globe rotation
+        // Below is for a non globe map
         //function zoomed() {
         //    var e = d3.event;
-        //    var currentRotate = rotateScale(e.transform.x) % 360;
-        //    aProjection
-        //        .rotate([currentRotate, 0])
-        //        .scale(e.transform.k);
+
+        //    var path = document.querySelector("path.graticule.line");
+            
+        //    var graticuleHalfHeight = path.getBoundingClientRect().height / 2;
+        //    var lowerLimitY = graticuleHalfHeight;
+        //    var upperLimitY = height - graticuleHalfHeight;
+
+        //    var graticuleHalfWidth = path.getBoundingClientRect().width / 2;
+        //    var lowerLimitX = width / 2 - graticuleHalfWidth;
+        //    var upperLimitX = width / 2 + graticuleHalfWidth;
+
+        //    if (path.getBoundingClientRect().height < height) {
+        //        var y = e.transform.y;
+        //        if (e.transform.y < lowerLimitY) {
+        //            y = lowerLimitY;
+        //        } else if (e.transform.y > upperLimitY) {
+        //            y = upperLimitY;
+        //        }
+
+
+        //        var x = e.transform.x;
+        //        if (e.transform.x < lowerLimitX) {
+        //            x = lowerLimitX;
+        //        } else if (e.transform.x > upperLimitX) {
+        //            x = upperLimitX;
+        //        }
+
+        //        aProjection
+        //            //.translate([width / 2, height / 2])
+        //            .translate([x, y])
+        //            .scale(e.transform.k);
+                
+        //    } else {
+        //        aProjection
+        //            //.translate([width / 2, height / 2])
+        //            .translate([e.transform.x, e.transform.y])
+        //            .scale(e.transform.k);
+        //    }
         //    d3.selectAll("path.graticule").attr("d", geoPath);
         //    d3.selectAll("path.countries").attr("d", geoPath);
-
         //    d3.selectAll("circle.meteorites")
-        //        .each(function(d, i) {
-        //            var projectedPoint = aProjection([d.Longitude, d.Latitude]);
-        //            var x = parseFloat(d.Longitude);
-        //            var display = x + currentRotate < 90 && x + currentRotate > 90 ||
-        //                (x + currentRotate < -270 && x + currentRotate > -600) ||
-        //                (x + currentRotate > 270 && x + currentRotate < 600)
-        //                ? "block"
-        //                : "none";
-        //            d3.select(this)
-        //                .attr("cx", parseFloat(projectedPoint[0]))
-        //                .attr("cy", parseFloat(projectedPoint[1]))
-        //                .style("display", display);
-        //        });
+        //        .attr("cx", d => aProjection([d.Longitude, d.Latitude])[0])
+        //        .attr("cy", d => aProjection([d.Longitude, d.Latitude])[1]);
         //}
+        
+
+        // Below is what is needed to create globe rotation
+        function zoomed() {
+            var e = d3.event;
+            var currentRotate = rotateScale(e.transform.x) % 360;
+            aProjection
+                .rotate([currentRotate, 0])
+                .scale(e.transform.k);
+            d3.selectAll("path.graticule").attr("d", geoPath);
+            d3.selectAll("path.countries").attr("d", geoPath);
+
+            d3.selectAll("circle.meteorites")
+                .each(function(d, i) {
+                    var projectedPoint = aProjection([d.Longitude, d.Latitude]);
+                    var x = parseFloat(d.Longitude);
+                    var display = x + currentRotate < 90 && x + currentRotate > 90 ||
+                        (x + currentRotate < -270 && x + currentRotate > -600) ||
+                        (x + currentRotate > 270 && x + currentRotate < 600)
+                        ? "block"
+                        : "none";
+                    d3.select(this)
+                        .attr("cx", parseFloat(projectedPoint[0]))
+                        .attr("cy", parseFloat(projectedPoint[1]))
+                        .style("display", display);
+                });
+        }
     }
 });
 
