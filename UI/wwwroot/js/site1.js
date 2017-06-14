@@ -39,13 +39,6 @@
     //   DRAW WORLD MAP
     //-------------------
     function createMap(countries) {
-        
-        /* This is to color the countries based on their size
-        var featureSize = d3.extent(countries.features, d => geoPath.area(d));
-        var countryColor = d3.scaleQuantize()
-            .domain(featureSize).range(colorbrewer.Greens[7]);
-        */
-
         d3.select("svg")
             .attr("width", width)
             .attr("height", height)
@@ -53,12 +46,11 @@
             .enter()
             .append("path")
             .attr("class", "countries")
-            //.style("fill", d => countryColor(geoPath.area(d))) => uncomment this to color countries based on their size.
             .attr("d", geoPath);
 
         d3.selectAll("path.countries")
-            .on("mouseover", countryName) // OR centerBounds
-            .on("mouseout", clearCountryName); // OR clearCenterBounds   
+            .on("mouseover", countryName)
+            .on("mouseout", clearCountryName);
 
         var graticule = d3.geoGraticule();
         d3.select("svg").insert("path", "path.countries")
@@ -97,7 +89,7 @@
     }
 
     //-------------------
-    //   ADD METEORITES
+    //   ADD METEORITES INITIALLY (CURRENTLY NOT IN USE)
     //-------------------
     function addMeteorites(meteorites) {
         d3.select("svg")
@@ -222,7 +214,6 @@
             .attr("cy", d => aProjection([d.Longitude, d.Latitude])[1]);
     }
 
-
     function redraw() {
         console.log("alsjnajsn");
         d3.select("svg").attr("width", window.innerWidth)
@@ -240,17 +231,13 @@
             isComplete = false;
             $.getJSON(`api/meteorites?pageNumber=${pageNumber++}&pageSize=${pageSize || 100}`).done((d) => {
                 userLoadedMeteorites += d.length;
-  
 
                 d.forEach((meteorite, index) => {
                     window.setTimeout(() => {
-                        console.log(meteorite);
-
-
                         d3.select("svg").data([meteorite])
                             .append("circle")
                             .attr("class", "meteorites")
-                            .attr("r", 4.2)
+                            .attr("r", 4)
                             .attr("cx", d => aProjection([d.Longitude, d.Latitude])[0])
                             .attr("cy", d => aProjection([d.Longitude, d.Latitude])[1])
                             .on("mouseover", meteoriteName)
