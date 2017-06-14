@@ -95,6 +95,10 @@ svg {
     text-align: center;
 }
 
+.modal-content > p {
+    color: black;
+}
+
 .close:hover,
 .close:focus {
     color: black;
@@ -120,9 +124,9 @@ svg {
     border-radius: 0;
 }
 
-.btn-primary:hover {
-    background: grey;
-}
+    .btn-primary:hover {
+        background: #718792;
+    }
 
 p, h3 {
     color: white;
