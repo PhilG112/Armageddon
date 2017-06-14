@@ -54,18 +54,18 @@ namespace HookIn
                 var m = db.Meteorites.ToList();
                 GoogleGeocoder geocoder = new GoogleGeocoder { ApiKey = "AIzaSyCwvXEfG0IskDlB6WaBTVR_6nsr8CvM71c" };
                 var counter = 1;
-                foreach (var i in m)
+                foreach (var c in m)
                 {
-                    if (string.IsNullOrEmpty(i.Longitude) || string.IsNullOrEmpty(i.Latitude)) continue;
-                    if (!string.IsNullOrEmpty(i.Country)) continue;
-                    if (i.Longitude == i.Latitude) continue;
+                    if (string.IsNullOrEmpty(c.Longitude) || string.IsNullOrEmpty(c.Latitude)) continue;
+                    if (!string.IsNullOrEmpty(c.Country)) continue;
+                    if (c.Longitude == c.Latitude) continue;
 
-                    var addresses = geocoder.ReverseGeocode(double.Parse(i.Latitude), double.Parse(i.Longitude));
+                    var addresses = geocoder.ReverseGeocode(double.Parse(c.Latitude), double.Parse(c.Longitude));
                     if (!addresses.Any()) continue;
                     var country = addresses.Where(a => !a.IsPartialMatch).Select(a => a[GoogleAddressType.Country])
                         .First();
 
-                    i.Country = country.LongName;
+                    c.Country = country.LongName;
                     db.SaveChanges();
                     Console.WriteLine(counter);
                     counter++;

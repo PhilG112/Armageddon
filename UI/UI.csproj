@@ -6,10 +6,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Include="MyStaticFiles\world - Copy.geojson" />
     <Content Include="MyStaticFiles\world.geojson" />
     <Content Include="wwwroot\assets\world.topojson" />
     <Content Include="wwwroot\js\colorbrewer.min.js" />
+    <Content Include="wwwroot\js\site1.js" />
+    <Content Include="wwwroot\js\site1.min.js" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="BuildBundlerMinifier" Version="2.4.337" />

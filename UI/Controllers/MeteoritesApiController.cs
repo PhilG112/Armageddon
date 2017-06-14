@@ -6,11 +6,11 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace UI.Controllers
 {
-    public class MeteoritesController : Controller
+    public class MeteoritesApiController : Controller
     {
         private readonly ArmageddonContext _context;
 
-        public MeteoritesController(ArmageddonContext context)
+        public MeteoritesApiController(ArmageddonContext context)
         {
             _context = context;
         }
@@ -20,14 +20,14 @@ namespace UI.Controllers
         [HttpGet]
         public IActionResult GetAll(int pageNumber, int pageSize)
         {
-            var meteories = _context.Meteorites
+            var meteorites = _context.Meteorites
                 .Where(c => c.Country != null)
                 .OrderBy(x => x.Id)
                 .Skip((pageNumber - 1) * pageSize)
                 .Take(pageSize).ToList();
 
             var serializer = new JavaScriptSerializer {MaxJsonLength = Int32.MaxValue};
-            return new ObjectResult(serializer.Serialize(meteories));
+            return new ObjectResult(serializer.Serialize(meteorites));
         }
     }
 }
