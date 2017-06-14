@@ -3,9 +3,9 @@
 }
 
 .countries {
-    stroke-width: 0.6;
-    stroke: white;
-    fill: black;
+    stroke-width: 1;
+    stroke: black;
+    fill: white;
 }
 
 .countries:hover {
@@ -34,12 +34,14 @@
 .graticule {
     fill: none;
     stroke-width: 0.5;
-    stroke: black;
+    stroke: white;
     opacity: 0.3;
 }
 
 .graticule.outline {
-    stroke: #9A8B7A;
+    stroke: white;
+    stroke-width: 1;
+    opacity: 1;
 }
 
 .merged {
@@ -49,7 +51,7 @@
 }
 
 svg {
-    background-color: white;
+    background-color: black;
 }
 
 .tooltip {
@@ -112,7 +114,16 @@ svg {
 }
 
 .btn-primary {
-    background-color: black;
+    background-color: white;
+    color: black;
     border: none;
     border-radius: 0;
+}
+
+.btn-primary:hover {
+    background: grey;
+}
+
+p, h3 {
+    color: white;
 }
