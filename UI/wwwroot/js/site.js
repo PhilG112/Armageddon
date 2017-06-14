@@ -1,22 +1,27 @@
 ﻿$(function () {
     var promiseWrapper = (xhr, d) => new Promise(resolve => xhr(d, (p) => resolve(p)));
     var pageNumber = 1;
+    var meteoriteCounter = 0;
     Promise.all([
         promiseWrapper(d3.json, "StaticFiles/world.geojson"),
         promiseWrapper(d3.json, "api/meteorites?pageNumber=1&pageSize=100")
     ]).then(resolve => {
         createMap(resolve[0], resolve[1]);
-        window.setInterval(() => {
-            $.ajax({
-                url: `api/meteorites?pageNumber=${pageNumber++}&pageSize=100`,
-                dataType: "json",
-                method: "GET"
-            }).done((d) => {
-                // Do something with data
-            });
-        }, 1000);
-    });
 
+        var meteoriteCaller = window.setInterval(() => {
+            if (meteoriteCounter === 1000) {
+                clearInterval(meteoriteCaller);
+                return;
+            }
+            $.getJSON(`api/meteorites?pageNumber=${pageNumber++}&pageSize=100`)
+                .done((d) => {
+                    meteoriteCounter += _.size(d);
+                    console.log(meteoriteCounter);
+                    console.log(d);
+                });
+        }, 1000);
+
+    });
 
     var margin = { top: 20, right: 20, bottom: 20, left: 20 },
         width = window.innerWidth,// - margin.left - margin.right,
