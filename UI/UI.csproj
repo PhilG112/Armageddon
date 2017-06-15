@@ -9,7 +9,8 @@
     <Content Include="MyStaticFiles\world.geojson" />
     <Content Include="wwwroot\assets\world.topojson" />
     <Content Include="wwwroot\js\colorbrewer.min.js" />
-    <Content Include="wwwroot\js\site1.js" />
+    <Content Include="wwwroot\js\site.js" />
+    <Content Include="wwwroot\js\site.min.js" />
     <Content Include="wwwroot\js\site1.min.js" />
   </ItemGroup>
   <ItemGroup>

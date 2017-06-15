@@ -22,7 +22,7 @@ namespace UI.Controllers
         {
             var meteorites = _context.Meteorites
                 .Where(c => c.Country != null)
-                .OrderBy(x => x.Id)
+                .OrderBy(i => i.Id)
                 .Skip((pageNumber - 1) * pageSize)
                 .Take(pageSize).ToList();
 
