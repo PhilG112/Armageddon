@@ -2,18 +2,14 @@
     //-------------------
     // GLOBAL VARIABLES
     //-------------------
-    var margin = { top: 20, right: 20, bottom: 20, left: 20 },
-        width = window.innerWidth,// - margin.left - margin.right,
+    const margin = { top: 20, right: 20, bottom: 20, left: 20 };
+    var width = window.innerWidth,// - margin.left - margin.right,
         height = window.innerHeight;//- margin.top - margin.bottom;
-
-    var tooltip = d3.select("body").append("div")
-        .attr("class", "tooltip")
-        .style("opacity", 0);
 
     var svg = d3.select("svg")
         .attr("width", width)
         .attr("height", height);
-
+    
     var geoPath = null;
 
     var orthographicProjection = d3.geoOrthographic()
@@ -28,26 +24,31 @@
     //------------
     // CHOOSE MAP
     //------------
-    $("#mollweide-map").on("click", (e) => {
-        createMapRequest(e);
+    var choice = null;
+    $("#mollweide-map").on("click", () => {
+        createMapRequest("mollweide");
+        choice = "mollweide";
     });
 
-    $("#orthographic-map").on("click", (e) => {
-        createMapRequest(e);
+    $("#orthographic-map").on("click", () => {
+        createMapRequest("orthographic");
+        choice = "orthographic";
     });
 
     //------------------
     // GET AND USE DATA
     //------------------
-    function createMapRequest(map) {
+    function createMapRequest(projection) {
         var promiseWrapper = (xhr, d) => new Promise(resolve => xhr(d, (p) => resolve(p)));
         Promise.all([
             promiseWrapper(d3.json, "StaticFiles/world.geojson")
         ]).then(resolve => {
-            if (map.target === $("#orthographic-map")) {
+            if (projection === "orthographic") {
                 drawMap(resolve[0], orthographicProjection);
+                startZoom(projection);
             } else {
                 drawMap(resolve[0], mollweideProjection);
+                startZoom(projection);
             }
         });
     }
@@ -57,13 +58,13 @@
     //-------------------
     function drawMap(countries, projection) {
 
-        // CLEAR MAP BEFORE DRAWING
+        $("svg > *").remove();
 
         geoPath = d3.geoPath().projection(projection);
 
         svg.selectAll("path").data(countries.features)
             .enter()
-            .append("path")
+            .insert("path")
             .attr("class", "countries")
             .attr("d", geoPath);
 
@@ -81,15 +82,16 @@
             .attr("class", "graticule outline")
             .attr("d", geoPath);
         startZoom();
+        drawMeteoritesStatically();
     }
 
     //------------
     //  ZOOMING
     //------------
-    function startZoom() {
+    function startZoom(p) {
         var mapZoom = d3.zoom()
             .scaleExtent([150, 800])
-            .on("zoom", mollweideZoom);
+            .on("zoom", p === "orthographic" ? orthographicZoom : mollweideZoom);
 
         var zoomSettings = d3.zoomIdentity
             .translate(width / 2, height / 2)
@@ -109,7 +111,7 @@
         var currentRotate = rotateScale(e.transform.x) % 360;
 
         orthographicProjection
-            .rotate([currentRotate, 0])
+            .rotate([currentRotate, e.transform.y])
             .scale(e.transform.k);
         d3.selectAll("path.graticule").attr("d", geoPath);
         d3.selectAll("path.countries").attr("d", geoPath);
@@ -119,10 +121,10 @@
                 var projectedPoint = orthographicProjection([d.Longitude, d.Latitude]);
                 var x = parseFloat(d.Longitude);
                 var display = x + currentRotate < 90 && x + currentRotate > 90 ||
-                    (x + currentRotate < -270 && x + currentRotate > -360) ||
-                    (x + currentRotate > 270 && x + currentRotate < 360)
-                    ? "block"
-                    : "none";
+                    (x + currentRotate < -270 && x + currentRotate > -450) ||
+                    (x + currentRotate > 270 && x + currentRotate < 450)
+                    ? "block" : "none";
+                
                 d3.select(this)
                     .attr("cx", parseFloat(projectedPoint[0]))
                     .attr("cy", parseFloat(projectedPoint[1]))
@@ -145,14 +147,14 @@
         var upperLimitX = width / 2 + graticuleHalfWidth;
 
         if (path.getBoundingClientRect().height < height) {
-            var y = e.transform.y;
+            let y = e.transform.y;
             if (e.transform.y < lowerLimitY) {
                 y = lowerLimitY;
             } else if (e.transform.y > upperLimitY) {
                 y = upperLimitY;
             }
 
-            var x = e.transform.x;
+            let x = e.transform.x;
             if (e.transform.x < lowerLimitX) {
                 x = lowerLimitX;
             } else if (e.transform.x > upperLimitX) {
@@ -176,8 +178,13 @@
     }
 
     //----------------------
-    // COUNTRY NAME TOOLTIP
+    // COUNTRY TOOLTIP
     //----------------------
+
+    var tooltip = d3.select("body").append("div")
+        .attr("class", "tooltip")
+        .style("opacity", 0);
+
     var meteorites = [];
     function countryName(d) {
         var numOfCountries = [];
@@ -214,7 +221,7 @@
 
     function clearMeteoriteName() {
         tooltip.transition()
-            .duration(500)
+            .duration(200)
             .style("opacity", 0);
     }
 
@@ -247,12 +254,12 @@
     //----------------
     // RESPONSIVE SVG
     //----------------
+    $(window).on("resize", redraw);
     function redraw() {
         svg.attr("width", window.innerWidth)
            .attr("height", window.innerHeight);
     }
-    $(window).on("resize", redraw);
-
+    
     //-----------------
     // LOAD METEORITES
     //-----------------
@@ -261,32 +268,58 @@
     var pageNumber = 1;
     $("#load-meteorites").on("click", () => {
         var pageSize = $("input").val();
-        var $p = $(".controls > p");        
+        var $p = $("#amount-loaded");
         if (isComplete) {
             isComplete = false;
             $.getJSON(`api/meteorites?pageNumber=${pageNumber++}&pageSize=${pageSize || 100}`).done((d) => {
                 userLoadedMeteorites += d.length;
                 d.forEach((meteorite, index) => {
-                    meteorites.push(meteorite);
-                    window.setTimeout(() => {
-                        svg.data([meteorite])
-                            .append("circle")
-                            .attr("class", "meteorites")
-                            .attr("r", 2.5)
-                            .attr("cx", d => orthographicProjection([d.Longitude, d.Latitude])[0])
-                            .attr("cy", d => orthographicProjection([d.Longitude, d.Latitude])[1])
-                            .on("mouseover", meteoriteName)
-                            .on("mouseout", clearMeteoriteName)
-                            .on("click", meteoriteModal);
-                    },index * 100);
+                    drawMeteoritesDynamically(meteorite, index);
                 });
-
                 $p.text(userLoadedMeteorites);
-                isComplete = true;  
+                isComplete = true;
             });
         } else {
-            // Fade message in and out;
             $("#request-notice").fadeIn();
+            $("#request-notice").fadeOut();
         }
     });
+
+    function drawMeteoritesDynamically(meteorite, index) {
+        meteorites.push(meteorite);
+            window.setTimeout(() => {
+            svg.data([meteorite])
+                .append("circle")
+                .attr("class", "meteorites")
+                .attr("r", 2.5)
+                .attr("cx", d => choice === "orthographic" ? orthographicProjection([d.Longitude, d.Latitude])[0]
+                                                           : mollweideProjection([d.Longitude, d.Latitude])[0])
+                .attr("cy", d => choice === "orthographic" ? orthographicProjection([d.Longitude, d.Latitude])[1]
+                                                           : mollweideProjection([d.Longitude, d.Latitude])[1])
+                .on("mouseover", meteoriteName)
+                .on("mouseout", clearMeteoriteName)
+                .on("click", meteoriteModal);
+        }, index * 50);
+    }
+
+    function drawMeteoritesStatically() {
+        if (meteorites.length > 0) {
+            console.log(meteorites);
+            for (let i = 0; i < meteorites.length; i ++) {
+                svg.data([meteorites[i]])
+                    .insert("circle")
+                    .attr("class", "meteorites")
+                    .attr("r", 2.5)
+                    .attr("cx", d => choice === "orthographic" ? orthographicProjection([d.Longitude, d.Latitude])[0]
+                                                               : mollweideProjection([d.Longitude, d.Latitude])[0])
+                    .attr("cy", d => choice === "orthographic" ? orthographicProjection([d.Longitude, d.Latitude])[1]
+                                                               : mollweideProjection([d.Longitude, d.Latitude])[1])
+                    .on("mouseover", meteoriteName)
+                    .on("mouseout", clearMeteoriteName)
+                    .on("click", meteoriteModal);
+            }            
+        } else {
+            return;
+        }
+    }
 });

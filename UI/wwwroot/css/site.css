@@ -68,19 +68,17 @@ svg {
     pointer-events: none;
 }
 
-/* MODAL */
-/* The Modal (background) */
 .modal {
-    display: none; /* Hidden by default */
-    position: fixed; /* Stay in place */
-    z-index: 1; /* Sit on top */
+    display: none;
+    position: fixed; 
+    z-index: 1;
     left: 0;
     top: 0;
-    width: 100%; /* Full width */
-    height: 100%; /* Full height */
-    overflow: hidden; /* Enable scroll if needed */
-    background-color: rgb(0,0,0); /* Fallback color */
-    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+    width: 100%; 
+    height: 100%;
+    overflow: hidden;
+    background-color: rgb(0,0,0);
+    background-color: rgba(0,0,0,0.4);
 }
 
 .modal-content {
@@ -91,7 +89,7 @@ svg {
     transform: translate(-50%, -50%);
     padding: 20px;
     border: 1px solid #888;
-    width: 30%; /* Could be more or less, depending on screen size */
+    width: 30%;
     text-align: center;
 }
 
@@ -107,7 +105,7 @@ svg {
 } 
 
 .form-control {
-    width: 81%;
+    width: 50%;
     border-radius: 0;
 }
 
@@ -115,18 +113,18 @@ svg {
     position: absolute;
     top: 0;
     left: 0;
+    padding: 30px;
 }
 
 .btn-primary {
-    background-color: white;
+    background-color: #718792;
     color: black;
-    border: none;
-    border-radius: 0;
+    border: none;    
 }
 
-    .btn-primary:hover {
-        background: #718792;
-    }
+.btn-primary:hover {
+    background: #718792;
+}
 
 p, h3 {
     color: white;

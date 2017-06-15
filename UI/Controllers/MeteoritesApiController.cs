@@ -22,9 +22,10 @@ namespace UI.Controllers
         {
             var meteorites = _context.Meteorites
                 .Where(c => c.Country != null)
-                .OrderBy(i => i.Id)
+                .OrderBy(c => c.Id)
                 .Skip((pageNumber - 1) * pageSize)
-                .Take(pageSize).ToList();
+                .Take(pageSize)
+                .ToList();
 
             var serializer = new JavaScriptSerializer {MaxJsonLength = Int32.MaxValue};
             return new ObjectResult(serializer.Serialize(meteorites));
