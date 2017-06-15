@@ -1,12 +1,39 @@
 ﻿<div class="controls">
-    <button id="mollweide-map" class="btn btn-primary">Mollweide</button>
-    <button id="orthographic-map" class="btn btn-primary">Orthographic</button>
-    <button id="load-meteorites" class="btn btn-primary">Load meteorites</button>
-    <input type="number" class="form-control" placeholder="Amount..."/>
+    <div class="row">
+        <h2>Choose your map</h2>
+        <div class="col-md-6">
+            <button id="mollweide-map">Mollweide</button>
+        </div>
+        <div class="col-md-6">
+            <button id="orthographic-map">Orthographic</button>
+        </div>
+    </div>
+    
+    <div class="row">
+        <p>Choose your amount</p>
+        <input placeholder="Amount..."/>
+    </div>
+    <div class="row">
+        <button id="load-meteorites">Load meteorites</button>
+    </div>
     <h3>You have loaded...</h3>
     <p id="amount-loaded"></p>
     <p id="request-notice">Please wait for previous request to finish</p>
 </div>
+
+
+<div class="splash">
+    <h1>Armageddon</h1>
+    <p>This is an interactive visualization of meteorites that have landed around the world</p>
+</div>
+
+<div class="instructions">
+    <h1>Instructions</h1>
+    <p>Choose your map that you want to render (this can be swapped at anytime)</p>
+    <p>Enter your amount of meteorites and load them</p>
+    <button id="start">Get Started</button>
+</div>
+
 
 <div id="myModal" class="modal">
     <div class="modal-content">`

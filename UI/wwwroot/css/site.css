@@ -1,5 +1,6 @@
 ﻿body {
     overflow: hidden;
+    margin: 0;
 }
 
 .countries {
@@ -33,7 +34,7 @@
 
 .graticule {
     fill: none;
-    stroke-width: 0.5;
+    stroke-width: 0.5px;
     stroke: white;
     opacity: 0.3;
 }
@@ -113,17 +114,81 @@ svg {
     position: absolute;
     top: 0;
     left: 0;
-    padding: 30px;
+    padding: 0 0 0 30px;
+    z-index: 1000;
+    text-align: center;
+    color: white;
+    display: none;
 }
 
-.btn-primary {
-    background-color: #718792;
+.splash {
+    max-height: 100vh;
+    max-width: 100vh;
+    display: none;
+    position: absolute;
+    top: 30%;
+    left: 50%;
+    color: white;
+    transform: translate(-50%, -50%);
+    text-align: center;
+}
+
+.instructions {
+    max-height: 100vh;
+    max-width: 100vh;
+    display: none;
+    position: absolute;
+    top: 30%;
+    left: 50%;
+    color: white;
+    transform: translate(-50%, -50%);
+    text-align: center;
+}
+
+
+h1 {
+    font-size: 70px;
+}
+
+.splash > p {
+    font-size: 30px;
+}
+
+.instructions > p {
+    font-size: 30px;
+}
+
+button {
+    color: white;
+    background: black;
+    border: 1px solid white;
+    border-radius: 8px;
+    padding: 5px;
+    font-size: 20px;
+}
+
+button:hover {
     color: black;
-    border: none;    
+    background: white;
+    border: 1px solid black;
 }
 
-.btn-primary:hover {
-    background: #718792;
+input {
+    border-radius: 8px;
+    color: black;
+}
+
+.row {
+    margin-bottom: 15px;
+}
+
+.col-md-6 {
+    padding-right: 0;
+}
+
+h2 {
+    position: relative;
+    left: 17px;
 }
 
 p, h3 {

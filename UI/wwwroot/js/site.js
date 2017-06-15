@@ -2,9 +2,8 @@
     //-------------------
     // GLOBAL VARIABLES
     //-------------------
-    const margin = { top: 20, right: 20, bottom: 20, left: 20 };
-    var width = window.innerWidth,// - margin.left - margin.right,
-        height = window.innerHeight;//- margin.top - margin.bottom;
+    var width = window.innerWidth,
+        height = window.innerHeight;
 
     var svg = d3.select("svg")
         .attr("width", width)
@@ -286,20 +285,25 @@
     });
 
     function drawMeteoritesDynamically(meteorite, index) {
+        var transitions = [8, 2];
         meteorites.push(meteorite);
             window.setTimeout(() => {
-            svg.data([meteorite])
-                .append("circle")
-                .attr("class", "meteorites")
-                .attr("r", 2.5)
-                .attr("cx", d => choice === "orthographic" ? orthographicProjection([d.Longitude, d.Latitude])[0]
-                                                           : mollweideProjection([d.Longitude, d.Latitude])[0])
-                .attr("cy", d => choice === "orthographic" ? orthographicProjection([d.Longitude, d.Latitude])[1]
-                                                           : mollweideProjection([d.Longitude, d.Latitude])[1])
-                .on("mouseover", meteoriteName)
-                .on("mouseout", clearMeteoriteName)
-                .on("click", meteoriteModal);
-        }, index * 50);
+                var m = svg.data([meteorite])
+                    .append("circle")
+                    .attr("class", "meteorites")
+                    .attr("r", 20)
+                    .attr("cx", d => choice === "orthographic" ? orthographicProjection([d.Longitude, d.Latitude])[0]
+                                                               : mollweideProjection([d.Longitude, d.Latitude])[0])
+                    .attr("cy", d => choice === "orthographic" ? orthographicProjection([d.Longitude, d.Latitude])[1]
+                                                               : mollweideProjection([d.Longitude, d.Latitude])[1])
+                    .on("mouseover", meteoriteName)
+                    .on("mouseout", clearMeteoriteName)
+                    .on("click", meteoriteModal);
+                transitions.forEach((n, i) => {
+                    m.transition().duration(100).delay(i * 100).attr("r", n);
+                });
+        }, index * 100);
+        
     }
 
     function drawMeteoritesStatically() {
@@ -309,7 +313,7 @@
                 svg.data([meteorites[i]])
                     .insert("circle")
                     .attr("class", "meteorites")
-                    .attr("r", 2.5)
+                    .attr("r", 2)
                     .attr("cx", d => choice === "orthographic" ? orthographicProjection([d.Longitude, d.Latitude])[0]
                                                                : mollweideProjection([d.Longitude, d.Latitude])[0])
                     .attr("cy", d => choice === "orthographic" ? orthographicProjection([d.Longitude, d.Latitude])[1]
@@ -322,4 +326,20 @@
             return;
         }
     }
+
+    //----------
+    // UI STUFF
+    //----------
+    $(window).on("load", () => {
+        $(".splash").fadeIn(4000);
+        $(".splash").delay(500).fadeOut(2000, () => {
+            $(".instructions").fadeIn(4000);
+        });
+    });
+
+    $("#start").on("click", () => {
+        $(".instructions").fadeOut(2000, () => {
+            $(".controls").fadeIn(4000);
+        });
+    });
 });
