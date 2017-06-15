@@ -52,7 +52,7 @@ namespace HookIn
             using (var db = new ArmageddonContext("Data Source=xpswindows\\development;Initial Catalog=ArmageddonDB;Integrated Security=True;MultipleActiveResultSets=True"))
             {
                 var m = db.Meteorites.ToList();
-                GoogleGeocoder geocoder = new GoogleGeocoder { ApiKey = "AIzaSyCwvXEfG0IskDlB6WaBTVR_6nsr8CvM71c" };
+                GoogleGeocoder geocoder = new GoogleGeocoder();
                 var counter = 1;
                 foreach (var c in m)
                 {
