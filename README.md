@@ -14,6 +14,7 @@ Armageddon is an interactive data visualization using D3.js. It plots out meteor
 - HTML5
 - Hosted on Microsoft Azure
 - Visual Studio
+- ES6
 
 ### Run it on your machine
 - Have Visual Studio
