@@ -113,7 +113,7 @@
             .rotate([currentRotate, e.transform.y])
             .scale(e.transform.k);
         d3.selectAll("path.graticule").attr("d", geoPath);
-        d3.selectAll("path.countries").attr("d", geoPath);
+        d3.selectAll("path.countries").attr("d", geoPath);  
 
         d3.selectAll("circle.meteorites")
             .each(function (d, i) {
@@ -159,11 +159,9 @@
             } else if (e.transform.x > upperLimitX) {
                 x = upperLimitX;
             }
-
             mollweideProjection
                 .translate([x, y])
                 .scale(e.transform.k);
-
         } else {
             mollweideProjection
                 .translate([e.transform.x, e.transform.y])
@@ -179,7 +177,6 @@
     //----------------------
     // COUNTRY TOOLTIP
     //----------------------
-
     var tooltip = d3.select("body").append("div")
         .attr("class", "tooltip")
         .style("opacity", 0);
@@ -243,9 +240,8 @@
         });
 
         $(window).on("click", e => {
-            // Check why this wasn't working with $modal with jack
             if (e.target.id === "myModal") {
-                $modal.css({ display: "none" });
+                $modal.css({ display: "none" });    
             }
         });
     }
@@ -258,7 +254,10 @@
         svg.attr("width", window.innerWidth)
            .attr("height", window.innerHeight);
     }
+
     
+
+
     //-----------------
     // LOAD METEORITES
     //-----------------
@@ -285,13 +284,12 @@
     });
 
     function drawMeteoritesDynamically(meteorite, index) {
-        var transitions = [8, 2];
         meteorites.push(meteorite);
             window.setTimeout(() => {
                 var m = svg.data([meteorite])
                     .append("circle")
                     .attr("class", "meteorites")
-                    .attr("r", 20)
+                    .attr("r", 30)
                     .attr("cx", d => choice === "orthographic" ? orthographicProjection([d.Longitude, d.Latitude])[0]
                                                                : mollweideProjection([d.Longitude, d.Latitude])[0])
                     .attr("cy", d => choice === "orthographic" ? orthographicProjection([d.Longitude, d.Latitude])[1]
@@ -299,10 +297,8 @@
                     .on("mouseover", meteoriteName)
                     .on("mouseout", clearMeteoriteName)
                     .on("click", meteoriteModal);
-                transitions.forEach((n, i) => {
-                    m.transition().duration(100).delay(i * 100).attr("r", n);
-                });
-        }, index * 100);
+                m.transition().duration(300).attr("r", 2.5).ease();
+            }, index * 100);
         
     }
 
@@ -313,7 +309,7 @@
                 svg.data([meteorites[i]])
                     .insert("circle")
                     .attr("class", "meteorites")
-                    .attr("r", 2)
+                    .attr("r", 2.5)
                     .attr("cx", d => choice === "orthographic" ? orthographicProjection([d.Longitude, d.Latitude])[0]
                                                                : mollweideProjection([d.Longitude, d.Latitude])[0])
                     .attr("cy", d => choice === "orthographic" ? orthographicProjection([d.Longitude, d.Latitude])[1]
@@ -327,12 +323,24 @@
         }
     }
 
+    //------------------
+    // CLEAR METEORITES
+    //------------------
+    $("#reset-btn").on("click", () => {
+        $("svg > circle").remove();
+        userLoadedMeteorites = 0;
+        meteorites = [];
+        $("#amount-loaded").text(userLoadedMeteorites);
+        pageNumber = 1;
+
+    });
+
     //----------
     // UI STUFF
     //----------
     $(window).on("load", () => {
         $(".splash").fadeIn(4000);
-        $(".splash").delay(500).fadeOut(2000, () => {
+        $(".splash").fadeOut(2000, () => {
             $(".instructions").fadeIn(4000);
         });
     });
@@ -340,6 +348,7 @@
     $("#start").on("click", () => {
         $(".instructions").fadeOut(2000, () => {
             $(".controls").fadeIn(4000);
+            $(".reset-container").fadeIn(4000);
         });
     });
 });

@@ -198,3 +198,11 @@ p, h3 {
 #request-notice {
     display: none;
 }
+
+.reset-container {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    padding: 20px;
+    display: none;
+}
