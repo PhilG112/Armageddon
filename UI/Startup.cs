@@ -39,7 +39,7 @@ namespace UI
             {
                 options.Filters.Add(new CorsAuthorizationFilterFactory("AllowSpecificOrigin"));
             });
-            services.AddScoped(_ => new ArmageddonContext(Configuration.GetConnectionString("connString")));
+            services.AddScoped(_ => new ArmageddonContext(Configuration.GetConnectionString("DefaultConnection")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
