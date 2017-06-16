@@ -110,7 +110,7 @@
         var currentRotate = rotateScale(e.transform.x) % 360;
 
         orthographicProjection
-            .rotate([currentRotate, e.transform.y])
+            .rotate([currentRotate, -e.transform.y])
             .scale(e.transform.k);
         d3.selectAll("path.graticule").attr("d", geoPath);
         d3.selectAll("path.countries").attr("d", geoPath);  
@@ -339,6 +339,7 @@
     // UI STUFF
     //----------
     $(window).on("load", () => {
+        $(".skip-container").fadeIn(2000);
         $(".splash").fadeIn(4000);
         $(".splash").fadeOut(2000, () => {
             $(".instructions").fadeIn(4000);
@@ -350,5 +351,14 @@
             $(".controls").fadeIn(4000);
             $(".reset-container").fadeIn(4000);
         });
+    });
+
+    $("#skip-btn").on("click", () => {
+        $(".controls").css("display", "block");
+        $(".reset-container").css("display", "block");
+        $(".splash").css("display", "none");
+        $(".instructions").css("display", "none");
+        $(".splash").stop(true, true);
+        $("#skip-btn").fadeOut(2000);
     });
 });

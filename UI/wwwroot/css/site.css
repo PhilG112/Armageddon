@@ -203,6 +203,20 @@ p, h3 {
     position: absolute;
     left: 0;
     bottom: 0;
-    padding: 20px;
+    padding: 0 0 30px 40px;
     display: none;
 }
+
+.skip-container {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    text-align: center;
+    padding: 0 30px 10px 0;
+    display: none;
+}
+
+#skip-btn {
+    margin-bottom: 10px;
+}
+
