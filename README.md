@@ -24,5 +24,5 @@ Armageddon is an interactive data visualization using D3.js. It plots out meteor
 ### Bugs
 - Orthographic map does not show meteorites correctly based on the roation of the globe.
 - Meteories continue to load if clear meteorites button is clicked (have to wait until all meteories are loaded)
-- Styling of controls are finished
+- Styling of controls are not finished
 
