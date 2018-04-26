@@ -20,7 +20,6 @@ Armageddon is an interactive data visualization using D3.js. It plots out meteor
 - Have Visual Studio
 - Restore database back up in database folder (Microsoft SQL Server)
 - Set your connection string in `appsettings.json` (you have to create this file yourself as mine has been omitted from this repo)
-- If all else fails view it live [here](http://armageddon-ga.azurewebsites.net/)
 
 ### Bugs
 - Orthographic map does not show meteorites correctly based on the roation of the globe.
